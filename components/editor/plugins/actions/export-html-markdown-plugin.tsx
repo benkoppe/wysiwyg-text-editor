@@ -3,7 +3,13 @@ import { JSX, useState, useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $generateHtmlFromNodes } from "@lexical/html";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
-import { FileTextIcon, NotebookPenIcon } from "lucide-react";
+import {
+    CircleCheckIcon,
+    CopyIcon,
+    DownloadIcon,
+    FileTextIcon,
+    NotebookPenIcon,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useDebounce } from "../../editor-hooks/use-debounce";
 
 const formatHTML = (html: string): string => {
     const div = document.createElement("div");
@@ -49,6 +56,65 @@ const formatHTML = (html: string): string => {
     };
     return prettify(div, 1).innerHTML;
 };
+
+function TextArea(props: { text: string; exportFile: string }): JSX.Element {
+    const [isCopyCompleted, setCopyCompleted] = useState<boolean>(false);
+
+    const removeCopySuccessIcon = useDebounce(() => {
+        setCopyCompleted(false);
+    }, 1000);
+
+    async function handleCopy(): Promise<void> {
+        try {
+            await navigator.clipboard.writeText(props.text);
+            setCopyCompleted(true);
+            removeCopySuccessIcon();
+        } catch (err) {
+            console.error("failed to copy: ", err);
+        }
+    }
+
+    function handleDownload() {
+        const blob = new Blob([props.text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = props.exportFile;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    return (
+        <ScrollArea className="h-[70vh] rounded-md border p-4 overflow-auto">
+            <div className="absolute top-2 right-2 flex gap-2 z-10">
+                <button
+                    className="flex shrink-0 cursor-pointer items-center rounded border border-transparent bg-none p-1 uppercase text-foreground/50"
+                    onClick={handleCopy}
+                    title="Copy to clipboard"
+                >
+                    {isCopyCompleted ? (
+                        <CircleCheckIcon className="size-4" />
+                    ) : (
+                        <CopyIcon className="size-4" />
+                    )}
+                </button>
+                <button
+                    className="flex shrink-0 cursor-pointer items-center rounded border border-transparent bg-none p-1 uppercase text-foreground/50"
+                    onClick={handleDownload}
+                    title="Save as file"
+                >
+                    <DownloadIcon className="size-4" />
+                </button>
+            </div>
+            <pre className="text-sm whitespace-pre-wrap font-mono break-all">
+                {props.text}
+            </pre>
+            <ScrollBar />
+        </ScrollArea>
+    );
+}
 
 export function ExportHtmlMarkdownPlugin(): JSX.Element {
     const [editor] = useLexicalComposerContext();
@@ -88,19 +154,16 @@ export function ExportHtmlMarkdownPlugin(): JSX.Element {
                             <TabsTrigger value="markdown">Markdown</TabsTrigger>
                         </TabsList>
                         <TabsContent value="html">
-                            <div className="h-[70vh] rounded-md border p-4 overflow-auto">
-                                <pre className="text-sm whitespace-pre-wrap font-mono break-all">
-                                    {htmlContent}
-                                </pre>
-                            </div>
+                            <TextArea
+                                text={htmlContent}
+                                exportFile="content.html"
+                            />
                         </TabsContent>
                         <TabsContent value="markdown">
-                            <ScrollArea className="h-[70vh] rounded-md border p-4 overflow-auto">
-                                <pre className="text-sm whitespace-pre-wrap font-mono break-all">
-                                    {markdownContent}
-                                </pre>
-                                <ScrollBar />
-                            </ScrollArea>
+                            <TextArea
+                                text={markdownContent}
+                                exportFile="content.md"
+                            />
                         </TabsContent>
                     </Tabs>
                 </div>
