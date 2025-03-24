@@ -51,12 +51,12 @@ import { CharacterLimitPlugin } from "@/components/editor/plugins/actions/charac
 import { ClearEditorActionPlugin } from "@/components/editor/plugins/actions/clear-editor-plugin";
 import { CounterCharacterPlugin } from "@/components/editor/plugins/actions/counter-character-plugin";
 import { EditModeTogglePlugin } from "@/components/editor/plugins/actions/edit-mode-toggle-plugin";
-import { ImportExportPlugin } from "@/components/editor/plugins/actions/import-export-plugin";
+import { ImportExportPlugin } from "@/components/editor/plugins/actions/import-export-file-plugin";
 import { MarkdownTogglePlugin } from "@/components/editor/plugins/actions/markdown-toggle-plugin";
 import { MaxLengthPlugin } from "@/components/editor/plugins/actions/max-length-plugin";
 import { ShareContentPlugin } from "@/components/editor/plugins/actions/share-content-plugin";
 import { SpeechToTextPlugin } from "@/components/editor/plugins/actions/speech-to-text-plugin";
-import { TreeViewPlugin } from "@/components/editor/plugins/actions/tree-view-plugin";
+import { ExportHtmlMarkdownPlugin } from "@/components/editor/plugins/actions/export-html-markdown-plugin";
 import { AutoLinkPlugin } from "@/components/editor/plugins/auto-link-plugin";
 import { AutocompletePlugin } from "@/components/editor/plugins/autocomplete-plugin";
 import { CodeActionMenuPlugin } from "@/components/editor/plugins/code-action-menu-plugin";
@@ -93,159 +93,174 @@ import { MARKDOWN_TRANSFORMERS } from "@/components/editor/transformers/markdown
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
 
 export const placeholder = "Press / for commands...";
-const maxLength = 500;
+const maxLength = 50000;
 
 export function Plugins({}) {
-  const [floatingAnchorElem, setFloatingAnchorElem] =
-    useState<HTMLDivElement | null>(null);
+    const [floatingAnchorElem, setFloatingAnchorElem] =
+        useState<HTMLDivElement | null>(null);
 
-  const onRef = (_floatingAnchorElem: HTMLDivElement) => {
-    if (_floatingAnchorElem !== null) {
-      setFloatingAnchorElem(_floatingAnchorElem);
-    }
-  };
+    const onRef = (_floatingAnchorElem: HTMLDivElement) => {
+        if (_floatingAnchorElem !== null) {
+            setFloatingAnchorElem(_floatingAnchorElem);
+        }
+    };
 
-  return (
-    <div className="relative h-full flex flex-col">
-      <ToolbarPlugin>
-        {({ blockType }) => (
-          <div className="vertical-align-middle place-items-center sticky top-0 z-10 flex gap-2 overflow-auto border-b p-1 flex-none">
-            <HistoryToolbarPlugin />
-            <Separator orientation="vertical" className="h-8" />
-            <BlockFormatDropDown>
-              <FormatParagraph />
-              <FormatHeading levels={["h1", "h2", "h3"]} />
-              <FormatNumberedList />
-              <FormatBulletedList />
-              <FormatCheckList />
-              <FormatCodeBlock />
-              <FormatQuote />
-            </BlockFormatDropDown>
-            {blockType === "code" ? (
-              <CodeLanguageToolbarPlugin />
-            ) : (
-              <>
-                <FontFamilyToolbarPlugin />
-                <FontSizeToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <FontFormatToolbarPlugin format="bold" />
-                <FontFormatToolbarPlugin format="italic" />
-                <FontFormatToolbarPlugin format="underline" />
-                <FontFormatToolbarPlugin format="strikethrough" />
-                <Separator orientation="vertical" className="h-8" />
-                <SubSuperToolbarPlugin />
-                <LinkToolbarPlugin />
-                <FontColorToolbarPlugin />
-                <FontBackgroundToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <ElementFormatToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <BlockInsertPlugin>
-                  <InsertHorizontalRule />
-                  <InsertPageBreak />
-                  <InsertImage />
-                  <InsertInlineImage />
-                  <InsertCollapsibleContainer />
-                  <InsertTable />
-                  <InsertPoll />
-                  <InsertColumnsLayout />
-                  <InsertEmbeds />
-                </BlockInsertPlugin>
-              </>
-            )}
-          </div>
-        )}
-      </ToolbarPlugin>
-      <div className="relative grow overflow-y-scroll">
-        <AutoFocusPlugin />
-        <RichTextPlugin
-          contentEditable={
-            <div className="h-full">
-              <div className="h-full" ref={onRef}>
-                <ContentEditable
-                  placeholder={placeholder}
-                  className="ContentEditable__root relative block overflow-auto min-h-full px-8 py-4 focus:outline-none"
+    return (
+        <div className="relative h-full flex flex-col">
+            <ToolbarPlugin>
+                {({ blockType }) => (
+                    <div className="vertical-align-middle place-items-center sticky top-0 z-10 flex gap-2 overflow-auto border-b p-1 flex-none">
+                        <HistoryToolbarPlugin />
+                        <Separator orientation="vertical" className="h-8" />
+                        <BlockFormatDropDown>
+                            <FormatParagraph />
+                            <FormatHeading levels={["h1", "h2", "h3"]} />
+                            <FormatNumberedList />
+                            <FormatBulletedList />
+                            <FormatCheckList />
+                            <FormatCodeBlock />
+                            <FormatQuote />
+                        </BlockFormatDropDown>
+                        {blockType === "code" ? (
+                            <CodeLanguageToolbarPlugin />
+                        ) : (
+                            <>
+                                <FontFamilyToolbarPlugin />
+                                <FontSizeToolbarPlugin />
+                                <Separator
+                                    orientation="vertical"
+                                    className="h-8"
+                                />
+                                <FontFormatToolbarPlugin format="bold" />
+                                <FontFormatToolbarPlugin format="italic" />
+                                <FontFormatToolbarPlugin format="underline" />
+                                <FontFormatToolbarPlugin format="strikethrough" />
+                                <Separator
+                                    orientation="vertical"
+                                    className="h-8"
+                                />
+                                <SubSuperToolbarPlugin />
+                                <LinkToolbarPlugin />
+                                <FontColorToolbarPlugin />
+                                <FontBackgroundToolbarPlugin />
+                                <Separator
+                                    orientation="vertical"
+                                    className="h-8"
+                                />
+                                <ElementFormatToolbarPlugin />
+                                <Separator
+                                    orientation="vertical"
+                                    className="h-8"
+                                />
+                                <BlockInsertPlugin>
+                                    <InsertHorizontalRule />
+                                    <InsertPageBreak />
+                                    <InsertImage />
+                                    <InsertInlineImage />
+                                    <InsertCollapsibleContainer />
+                                    <InsertTable />
+                                    <InsertPoll />
+                                    <InsertColumnsLayout />
+                                    <InsertEmbeds />
+                                </BlockInsertPlugin>
+                            </>
+                        )}
+                    </div>
+                )}
+            </ToolbarPlugin>
+            <div className="relative grow overflow-y-scroll">
+                <AutoFocusPlugin />
+                <RichTextPlugin
+                    contentEditable={
+                        <div className="h-full">
+                            <div className="h-full" ref={onRef}>
+                                <ContentEditable
+                                    placeholder={placeholder}
+                                    className="ContentEditable__root relative block overflow-auto min-h-full px-8 py-4 focus:outline-none"
+                                />
+                            </div>
+                        </div>
+                    }
+                    ErrorBoundary={LexicalErrorBoundary}
                 />
-              </div>
+
+                <ClickableLinkPlugin />
+                <CheckListPlugin />
+                <HorizontalRulePlugin />
+                <TablePlugin />
+                <ListPlugin />
+                <TabIndentationPlugin />
+                <HashtagPlugin />
+                <HistoryPlugin />
+
+                <MentionsPlugin />
+                <PageBreakPlugin />
+                <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
+                <KeywordsPlugin />
+                <EmojisPlugin />
+                <ImagesPlugin />
+                <InlineImagePlugin />
+                <TableCellResizerPlugin />
+                <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
+                <TableActionMenuPlugin
+                    anchorElem={floatingAnchorElem}
+                    cellMerge={true}
+                />
+                <PollPlugin />
+                <LayoutPlugin />
+                <EquationsPlugin />
+                <CollapsiblePlugin />
+
+                <AutoEmbedPlugin />
+                <FigmaPlugin />
+                <TwitterPlugin />
+                <YouTubePlugin />
+
+                <CodeHighlightPlugin />
+                <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
+
+                <MarkdownShortcutPlugin transformers={MARKDOWN_TRANSFORMERS} />
+                <TabFocusPlugin />
+                <AutocompletePlugin />
+                <AutoLinkPlugin />
+                <LinkPlugin />
+
+                <ComponentPickerMenuPlugin />
+                <ContextMenuPlugin />
+                <DragDropPastePlugin />
+                <EmojiPickerPlugin />
+
+                <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} />
+                <FloatingTextFormatToolbarPlugin
+                    anchorElem={floatingAnchorElem}
+                />
+
+                <ListMaxIndentLevelPlugin />
             </div>
-          }
-          ErrorBoundary={LexicalErrorBoundary}
-        />
-
-        <ClickableLinkPlugin />
-        <CheckListPlugin />
-        <HorizontalRulePlugin />
-        <TablePlugin />
-        <ListPlugin />
-        <TabIndentationPlugin />
-        <HashtagPlugin />
-        <HistoryPlugin />
-
-        <MentionsPlugin />
-        <PageBreakPlugin />
-        <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
-        <KeywordsPlugin />
-        <EmojisPlugin />
-        <ImagesPlugin />
-        <InlineImagePlugin />
-        <TableCellResizerPlugin />
-        <TableHoverActionsPlugin anchorElem={floatingAnchorElem} />
-        <TableActionMenuPlugin
-          anchorElem={floatingAnchorElem}
-          cellMerge={true}
-        />
-        <PollPlugin />
-        <LayoutPlugin />
-        <EquationsPlugin />
-        <CollapsiblePlugin />
-
-        <AutoEmbedPlugin />
-        <FigmaPlugin />
-        <TwitterPlugin />
-        <YouTubePlugin />
-
-        <CodeHighlightPlugin />
-        <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
-
-        <MarkdownShortcutPlugin transformers={MARKDOWN_TRANSFORMERS} />
-        <TabFocusPlugin />
-        <AutocompletePlugin />
-        <AutoLinkPlugin />
-        <LinkPlugin />
-
-        <ComponentPickerMenuPlugin />
-        <ContextMenuPlugin />
-        <DragDropPastePlugin />
-        <EmojiPickerPlugin />
-
-        <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} />
-        <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} />
-
-        <ListMaxIndentLevelPlugin />
-      </div>
-      <ActionsPlugin>
-        <div className="clear-both flex items-center justify-between border-t p-1 overflow-auto gap-2 flex-none">
-          <div className="flex justify-start flex-1">
-            <MaxLengthPlugin maxLength={maxLength} />
-            <CharacterLimitPlugin maxLength={maxLength} charset="UTF-16" />
-          </div>
-          <div>
-            <CounterCharacterPlugin charset="UTF-16" />
-          </div>
-          <div className="flex justify-end flex-1">
-            <SpeechToTextPlugin />
-            <ShareContentPlugin />
-            <ImportExportPlugin />
-            <MarkdownTogglePlugin shouldPreserveNewLinesInMarkdown={true} />
-            <EditModeTogglePlugin />
-            <>
-              <ClearEditorActionPlugin />
-              <ClearEditorPlugin />
-            </>
-            <TreeViewPlugin />
-          </div>
+            <ActionsPlugin>
+                <div className="clear-both flex items-center justify-between border-t p-1 overflow-auto gap-2 flex-none">
+                    <div className="flex justify-start flex-1">
+                        <CharacterLimitPlugin
+                            maxLength={maxLength}
+                            charset="UTF-16"
+                        />
+                    </div>
+                    <div>
+                        <CounterCharacterPlugin charset="UTF-16" />
+                    </div>
+                    <div className="flex justify-end flex-1 my-[1px] gap-1">
+                        <SpeechToTextPlugin />
+                        <ShareContentPlugin />
+                        <ImportExportPlugin />
+                        <EditModeTogglePlugin />
+                        <>
+                            <ClearEditorActionPlugin />
+                            <ClearEditorPlugin />
+                        </>
+                        <ExportHtmlMarkdownPlugin />
+                    </div>
+                </div>
+            </ActionsPlugin>
         </div>
-      </ActionsPlugin>
-    </div>
-  );
+    );
 }
