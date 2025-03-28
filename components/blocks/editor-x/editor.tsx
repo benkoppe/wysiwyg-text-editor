@@ -27,11 +27,15 @@ const editorConfig: InitialConfigType = {
 export function Editor({
   editorState,
   editorSerializedState,
+  placeholder = "",
+  maxLength = -1,
   onChange,
   onSerializedChange,
 }: {
   editorState?: EditorState;
   editorSerializedState?: SerializedEditorState;
+  placeholder?: string;
+  maxLength?: number;
   onChange?: (editorState: EditorState) => void;
   onSerializedChange?: (editorSerializedState: SerializedEditorState) => void;
 }) {
@@ -49,7 +53,7 @@ export function Editor({
         <TooltipProvider>
           <SharedAutocompleteContext>
             <FloatingLinkContext>
-              <Plugins />
+              <Plugins placeholder={placeholder} maxLength={maxLength} />
 
               <OnChangePlugin
                 ignoreSelectionChange={true}
