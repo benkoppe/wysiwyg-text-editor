@@ -4,8 +4,8 @@ import EditorComponent from "./Editor";
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-[80vw] h-[80vh] p-8">
+    <div className="flex h-[70vh] items-center justify-center mt-30">
+      <div className="w-full h-full">
         <EditorComponent />
       </div>
     </div>
