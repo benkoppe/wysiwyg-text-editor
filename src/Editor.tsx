@@ -48,7 +48,6 @@ export default function EditorComponent({
 
   const handleValueChange = (value: SerializedEditorState) => {
     setEditorState(value);
-    console.log(value);
     if (onValueChange) {
       // handle value change
     }
