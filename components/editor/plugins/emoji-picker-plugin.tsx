@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import dynamic from "next/dynamic";
 import { createPortal } from "react-dom";
 
 import {
@@ -23,10 +22,7 @@ import {
   TextNode,
 } from "lexical";
 
-const LexicalTypeaheadMenuPlugin = dynamic(
-  () => import("./default/lexical-typeahead-menu-plugin"),
-  { ssr: false },
-);
+import LexicalTypeaheadMenuPlugin from "./default/lexical-typeahead-menu-plugin";
 
 class EmojiOption extends MenuOption {
   title: string;

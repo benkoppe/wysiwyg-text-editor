@@ -1,8 +1,6 @@
 import { useCallback, useMemo, useState, JSX } from "react";
 import { createPortal } from "react-dom";
 
-import dynamic from "next/dynamic";
-
 import { $createCodeNode } from "@lexical/code";
 import {
   INSERT_CHECK_LIST_COMMAND,
@@ -70,10 +68,7 @@ import { INSERT_PAGE_BREAK } from "@/components/editor/plugins/page-break-plugin
 import { InsertPollDialog } from "@/components/editor/plugins/poll-plugin";
 import { InsertTableDialog } from "@/components/editor/plugins/table-plugin";
 
-const LexicalTypeaheadMenuPlugin = dynamic(
-  () => import("./default/lexical-typeahead-menu-plugin"),
-  { ssr: false },
-);
+import LexicalTypeaheadMenuPlugin from "./default/lexical-typeahead-menu-plugin";
 
 class ComponentPickerOption extends MenuOption {
   // What shows up in the editor

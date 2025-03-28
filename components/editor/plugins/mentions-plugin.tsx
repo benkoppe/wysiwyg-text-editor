@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, JSX } from "react";
 import * as React from "react";
 
-import dynamic from "next/dynamic";
-
 import {
   Command,
   CommandGroup,
@@ -20,10 +18,7 @@ import { TextNode } from "lexical";
 import { CircleUserRoundIcon } from "lucide-react";
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
 
-const LexicalTypeaheadMenuPlugin = dynamic(
-  () => import("./default/lexical-typeahead-menu-plugin"),
-  { ssr: false },
-);
+import LexicalTypeaheadMenuPlugin from "./default/lexical-typeahead-menu-plugin";
 
 const PUNCTUATION =
   "\\.,\\+\\*\\?\\$\\@\\|#{}\\(\\)\\^\\-\\[\\]\\\\/!%'\"~=<>_:;";
