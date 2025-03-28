@@ -88,6 +88,7 @@ import { TableHoverActionsPlugin } from "@/components/editor/plugins/table-hover
 import { ToolbarPlugin } from "@/components/editor/plugins/toolbar/toolbar-plugin";
 import { MARKDOWN_TRANSFORMERS } from "@/components/editor/transformers/markdown-transformers";
 import { ContentEditable } from "@/components/editor/editor-ui/content-editable";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export function Plugins(props: { placeholder: string; maxLength: number }) {
   const [floatingAnchorElem, setFloatingAnchorElem] =
@@ -150,7 +151,7 @@ export function Plugins(props: { placeholder: string; maxLength: number }) {
           </div>
         )}
       </ToolbarPlugin>
-      <div className="relative grow overflow-y-scroll">
+      <ScrollArea className="relative grow overflow-y-hidden">
         <AutoFocusPlugin />
         <RichTextPlugin
           contentEditable={
@@ -216,7 +217,7 @@ export function Plugins(props: { placeholder: string; maxLength: number }) {
         <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} />
 
         <ListMaxIndentLevelPlugin />
-      </div>
+      </ScrollArea>
       <ActionsPlugin>
         <div className="clear-both flex items-center justify-between border-t p-1 overflow-auto gap-2 flex-none">
           <div className="flex justify-start flex-1">
