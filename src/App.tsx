@@ -4,8 +4,11 @@ import EditorComponent from "./Editor";
 
 function App() {
   return (
-    <div className="flex h-[70vh] items-center justify-center mt-30">
-      <div className="w-full h-full">
+    <div className="flex h-[80vh] items-center justify-center mt-15">
+      <div className="w-full h-full flex flex-col gap-15">
+        <h1 className="text-5xl font-extrabold shadow-lg">
+          Ben's <code className="mx-2">WYSIWYG</code> Editor
+        </h1>
         <EditorComponent />
       </div>
     </div>
