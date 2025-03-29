@@ -104,54 +104,57 @@ export function Plugins(props: { placeholder: string; maxLength: number }) {
     <div className="relative h-full flex flex-col">
       <ToolbarPlugin>
         {({ blockType }) => (
-          <div className="vertical-align-middle place-items-center sticky top-0 z-10 flex gap-2 overflow-auto border-b p-1 flex-none">
-            <HistoryToolbarPlugin />
-            <Separator orientation="vertical" className="h-8" />
-            <BlockFormatDropDown>
-              <FormatParagraph />
-              <FormatHeading levels={["h1", "h2", "h3"]} />
-              <FormatNumberedList />
-              <FormatBulletedList />
-              <FormatCheckList />
-              <FormatCodeBlock />
-              <FormatQuote />
-            </BlockFormatDropDown>
-            {blockType === "code" ? (
-              <CodeLanguageToolbarPlugin />
-            ) : (
-              <>
-                <FontFamilyToolbarPlugin />
-                <FontSizeToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <FontFormatToolbarPlugin format="bold" />
-                <FontFormatToolbarPlugin format="italic" />
-                <FontFormatToolbarPlugin format="underline" />
-                <FontFormatToolbarPlugin format="strikethrough" />
-                <Separator orientation="vertical" className="h-8" />
-                <SubSuperToolbarPlugin />
-                <LinkToolbarPlugin />
-                <FontColorToolbarPlugin />
-                <FontBackgroundToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <ElementFormatToolbarPlugin />
-                <Separator orientation="vertical" className="h-8" />
-                <BlockInsertPlugin>
-                  <InsertHorizontalRule />
-                  <InsertPageBreak />
-                  <InsertImage />
-                  <InsertInlineImage />
-                  <InsertCollapsibleContainer />
-                  <InsertTable />
-                  <InsertPoll />
-                  <InsertColumnsLayout />
-                  <InsertEmbeds />
-                </BlockInsertPlugin>
-              </>
-            )}
-          </div>
+          <ScrollArea type="always" className="vertical-align-middle">
+            <div className="vertical-align-middle place-items-center sticky top-0 z-10 flex gap-2  border-b p-1 flex-none">
+              <HistoryToolbarPlugin />
+              <Separator orientation="vertical" className="h-8" />
+              <BlockFormatDropDown>
+                <FormatParagraph />
+                <FormatHeading levels={["h1", "h2", "h3"]} />
+                <FormatNumberedList />
+                <FormatBulletedList />
+                <FormatCheckList />
+                <FormatCodeBlock />
+                <FormatQuote />
+              </BlockFormatDropDown>
+              {blockType === "code" ? (
+                <CodeLanguageToolbarPlugin />
+              ) : (
+                <>
+                  <FontFamilyToolbarPlugin />
+                  <FontSizeToolbarPlugin />
+                  <Separator orientation="vertical" className="h-8" />
+                  <FontFormatToolbarPlugin format="bold" />
+                  <FontFormatToolbarPlugin format="italic" />
+                  <FontFormatToolbarPlugin format="underline" />
+                  <FontFormatToolbarPlugin format="strikethrough" />
+                  <Separator orientation="vertical" className="h-8" />
+                  <SubSuperToolbarPlugin />
+                  <LinkToolbarPlugin />
+                  <FontColorToolbarPlugin />
+                  <FontBackgroundToolbarPlugin />
+                  <Separator orientation="vertical" className="h-8" />
+                  <ElementFormatToolbarPlugin />
+                  <Separator orientation="vertical" className="h-8" />
+                  <BlockInsertPlugin>
+                    <InsertHorizontalRule />
+                    <InsertPageBreak />
+                    <InsertImage />
+                    <InsertInlineImage />
+                    <InsertCollapsibleContainer />
+                    <InsertTable />
+                    <InsertPoll />
+                    <InsertColumnsLayout />
+                    <InsertEmbeds />
+                  </BlockInsertPlugin>
+                </>
+              )}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         )}
       </ToolbarPlugin>
-      <ScrollArea type="scroll" className="relative grow overflow-y-hidden">
+      <ScrollArea type="always" className="relative grow overflow-y-hidden">
         <AutoFocusPlugin />
         <RichTextPlugin
           contentEditable={
@@ -217,30 +220,33 @@ export function Plugins(props: { placeholder: string; maxLength: number }) {
         <ListMaxIndentLevelPlugin />
       </ScrollArea>
       <ActionsPlugin>
-        <div className="clear-both flex items-center justify-between border-t p-1 overflow-auto gap-2 flex-none">
-          <div className="flex justify-start flex-1">
-            {props.maxLength > 0 && (
-              <CharacterLimitPlugin
-                maxLength={props.maxLength}
-                charset="UTF-16"
-              />
-            )}
+        <ScrollArea type="always" className="">
+          <div className="clear-both flex items-center justify-between border-t p-1  gap-2 flex-none">
+            <div className="flex justify-start flex-1">
+              {props.maxLength > 0 && (
+                <CharacterLimitPlugin
+                  maxLength={props.maxLength}
+                  charset="UTF-16"
+                />
+              )}
+            </div>
+            <div>
+              <CounterCharacterPlugin charset="UTF-16" />
+            </div>
+            <div className="flex justify-end flex-1 my-[1px] gap-1">
+              <SpeechToTextPlugin />
+              <ShareContentPlugin />
+              <ImportExportPlugin />
+              <EditModeTogglePlugin />
+              <>
+                <ClearEditorActionPlugin />
+                <ClearEditorPlugin />
+              </>
+              <ExportHtmlMarkdownPlugin />
+            </div>
           </div>
-          <div>
-            <CounterCharacterPlugin charset="UTF-16" />
-          </div>
-          <div className="flex justify-end flex-1 my-[1px] gap-1">
-            <SpeechToTextPlugin />
-            <ShareContentPlugin />
-            <ImportExportPlugin />
-            <EditModeTogglePlugin />
-            <>
-              <ClearEditorActionPlugin />
-              <ClearEditorPlugin />
-            </>
-            <ExportHtmlMarkdownPlugin />
-          </div>
-        </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
       </ActionsPlugin>
     </div>
   );
