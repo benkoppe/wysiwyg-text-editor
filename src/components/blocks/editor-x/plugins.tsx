@@ -151,17 +151,15 @@ export function Plugins(props: { placeholder: string; maxLength: number }) {
           </div>
         )}
       </ToolbarPlugin>
-      <ScrollArea className="relative grow overflow-y-hidden">
+      <ScrollArea type="scroll" className="relative grow overflow-y-hidden">
         <AutoFocusPlugin />
         <RichTextPlugin
           contentEditable={
-            <div className="h-full">
-              <div className="h-full" ref={onRef}>
-                <ContentEditable
-                  placeholder={props.placeholder}
-                  className="ContentEditable__root relative block overflow-auto min-h-full px-8 py-4 focus:outline-none"
-                />
-              </div>
+            <div className="h-full" ref={onRef}>
+              <ContentEditable
+                placeholder={props.placeholder}
+                className="ContentEditable__root relative block overflow-auto min-h-full px-8 py-4 focus:outline-none"
+              />
             </div>
           }
           ErrorBoundary={LexicalErrorBoundary}
