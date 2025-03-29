@@ -265,12 +265,7 @@ export function AutoEmbedPlugin(): JSX.Element {
         getMenuOptions={getMenuOptions}
         menuRenderFn={(
           anchorElementRef,
-          {
-            selectedIndex,
-            options,
-            selectOptionAndCleanUp,
-            setHighlightedIndex,
-          },
+          { options, selectOptionAndCleanUp },
         ) => {
           return anchorElementRef.current ? (
             <Popover open={true}>
@@ -285,7 +280,7 @@ export function AutoEmbedPlugin(): JSX.Element {
                     <Command>
                       <CommandList>
                         <CommandGroup>
-                          {options.map((option, i: number) => (
+                          {options.map((option, _i: number) => (
                             <CommandItem
                               key={option.key}
                               value={option.title}

@@ -1,12 +1,12 @@
-import { SquareSplitVerticalIcon } from 'lucide-react'
+import { SquareSplitVerticalIcon } from "lucide-react";
 
-import { useToolbarContext } from '@/components/editor/context/toolbar-context'
-import { SelectItem } from '@/components/ui/select'
+import { useToolbarContext } from "@/components/editor/context/toolbar-context";
+import { SelectItem } from "@/components/ui/select";
 
-import { INSERT_PAGE_BREAK } from '@/components/editor/plugins/page-break-plugin'
+import { INSERT_PAGE_BREAK } from "@/components/editor/plugins/page-break-plugin";
 
 export function InsertPageBreak() {
-  const { activeEditor } = useToolbarContext()
+  const { activeEditor } = useToolbarContext();
 
   return (
     <SelectItem
@@ -21,5 +21,5 @@ export function InsertPageBreak() {
         <span>Page Break</span>
       </div>
     </SelectItem>
-  )
+  );
 }

@@ -33,7 +33,6 @@ import {
   CodeIcon,
   Columns3Icon,
   DiffIcon,
-  FrameIcon,
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,

@@ -1,10 +1,8 @@
-import * as React from "react";
 import { Suspense, useCallback, useEffect, useRef, useState, JSX } from "react";
 
 import { HashtagNode } from "@lexical/hashtag";
 import { LinkNode } from "@lexical/link";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import { useCollaborationContext } from "@lexical/react/LexicalCollaborationContext";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HashtagPlugin } from "@lexical/react/LexicalHashtagPlugin";
@@ -113,6 +111,7 @@ function LazyImage({
 function BrokenImage(): JSX.Element {
   return (
     <img
+      // @ts-ignore
       src={null}
       style={{
         height: 200,
@@ -152,7 +151,7 @@ export default function ImageComponent({
   const [isSelected, setSelected, clearSelection] =
     useLexicalNodeSelection(nodeKey);
   const [isResizing, setIsResizing] = useState<boolean>(false);
-  const { isCollabActive } = useCollaborationContext();
+  // const { isCollabActive } = useCollaborationContext();
   const [editor] = useLexicalComposerContext();
   const [selection, setSelection] = useState<BaseSelection | null>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);

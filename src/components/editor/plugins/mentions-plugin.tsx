@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState, JSX } from "react";
-import * as React from "react";
 
 import {
   Command,
@@ -17,6 +16,8 @@ import {
 import { TextNode } from "lexical";
 import { CircleUserRoundIcon } from "lucide-react";
 import { $createMentionNode } from "@/components/editor/nodes/mention-node";
+
+import { createPortal } from "react-dom";
 
 import LexicalTypeaheadMenuPlugin from "./default/lexical-typeahead-menu-plugin";
 

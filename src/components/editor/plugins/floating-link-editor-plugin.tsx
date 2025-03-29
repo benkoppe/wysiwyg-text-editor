@@ -1,5 +1,4 @@
 import { Dispatch, useCallback, useEffect, useRef, useState, JSX } from "react";
-import * as React from "react";
 
 import {
   $createLinkNode,

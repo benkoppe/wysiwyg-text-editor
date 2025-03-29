@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { createPortal } from "react-dom";
@@ -60,7 +59,7 @@ export function EmojiPickerPlugin() {
   const [editor] = useLexicalComposerContext();
   const [queryString, setQueryString] = useState<string | null>(null);
   const [emojis, setEmojis] = useState<Array<Emoji>>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [_isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     import("../utils/emoji-list").then((file) => setEmojis(file.default));
   }, []);

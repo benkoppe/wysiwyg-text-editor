@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Suspense, useCallback, useEffect, useRef, useState, JSX } from "react";
 
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
@@ -114,13 +113,13 @@ export function UpdateInlineImageDialog({
   const [showCaption, setShowCaption] = useState(node.getShowCaption());
   const [position, setPosition] = useState<Position>(node.getPosition());
 
-  const handleShowCaptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setShowCaption(e.target.checked);
-  };
-
-  const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPosition(e.target.value as Position);
-  };
+  // const handleShowCaptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setShowCaption(e.target.checked);
+  // };
+  //
+  // const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setPosition(e.target.value as Position);
+  // };
 
   const handleOnConfirm = () => {
     const payload = { altText, position, showCaption };
