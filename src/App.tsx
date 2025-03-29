@@ -9,7 +9,10 @@ function App() {
         <h1 className="text-5xl font-extrabold shadow-lg">
           Ben's <code className="mx-2">WYSIWYG</code> Editor
         </h1>
-        <EditorComponent />
+        <EditorComponent
+          placeholder="Press / for commands..."
+          maxLength={50000}
+        />
       </div>
     </div>
   );
