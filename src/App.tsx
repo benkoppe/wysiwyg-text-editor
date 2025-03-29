@@ -12,6 +12,7 @@ function App() {
         <EditorComponent
           placeholder="Press / for commands..."
           maxLength={50000}
+          onValueChange={(value) => console.log(value)}
         />
       </div>
     </div>

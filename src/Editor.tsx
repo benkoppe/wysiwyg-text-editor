@@ -50,6 +50,8 @@ export default function EditorComponent({
     setEditorState(value);
     if (onValueChange) {
       // handle value change
+      const stringified = JSON.stringify(value);
+      onValueChange(stringified);
     }
   };
 
